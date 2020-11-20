@@ -4,9 +4,9 @@
 const Model = use('Model')
 
 class Grade extends Model {
-  // teacher() {
-  //   return this.hasOne("App/Models/Teacher");
-  // }
+  teacher() {
+    return this.belongsTo('App/Models/Teacher', 'id', 'grade_id');
+  }
 }
 
 module.exports = Grade

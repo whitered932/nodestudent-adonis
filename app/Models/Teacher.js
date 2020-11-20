@@ -4,6 +4,10 @@
 const Model = use('Model')
 
 class Teacher extends Model {
+  grade() {
+    return this.hasOne('App/Models/Grade', 'id', 'teacher_id');
+  }
+
 }
 
 module.exports = Teacher

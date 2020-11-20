@@ -16,11 +16,14 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.group(() => {
-
+Route.group('auth', () => {
   // AuthRoutes
   Route.post('/register', 'AuthController.register');
   Route.post('/login', 'AuthController.login');
   Route.post('/logout', 'AuthController.logout');
+}).prefix('api/auth');
 
-}).prefix('api');
+Route.group('teacher', () => {
+  // TeacherRoutes
+  Route.post('/create', 'TeacherController.create');
+}).prefix('api/teacher').middleware('auth');
