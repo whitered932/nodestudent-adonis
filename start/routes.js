@@ -16,8 +16,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-// Route.on('/').render('welcome')
 Route.group(() => {
+
+  // AuthRoutes
   Route.post('/register', 'AuthController.register');
   Route.post('/login', 'AuthController.login');
+  Route.post('/logout', 'AuthController.logout');
+
 }).prefix('api');

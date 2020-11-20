@@ -2,11 +2,28 @@
 
 const User = use("App/Models/User");
 const Hash = use('Hash');
+const {validate} = use('Validator');
 
 class AuthController {
-  async register({request, response}) {
+  async register({request, response, session}) {
+
+    const rules = {
+      email: 'required|email|unique:users,email',
+      password: 'required'
+    }
+
+    const validation = await validate(request.all(), rules);
 
     const {username, email, password} = request.body;
+
+    if (validation.fails()) {
+      session
+        .withErrors(validation.messages())
+        .flashExcept(['password'])
+
+      return response.json({success: false});
+    }
+
     try {
       const user = await User.create({
         username, email, password
@@ -50,9 +67,6 @@ class AuthController {
 
   async logout({auth, response}) {
     await auth.logout();
-    return response.json({
-      success: true
-    });
   };
 }
 
