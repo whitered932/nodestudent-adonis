@@ -52,8 +52,16 @@ class AuthController {
           message: "Пользователь с таким именем не найден"
         })
       }
-      await auth.attempt(email, password)
-      return response.json({
+      try {
+        await auth.attempt(email, password)
+      } catch (e) {
+        return response.status(500).send({
+          success: false,
+          message: "Уже авторизован",
+          error: e
+        });
+      }
+      return response.status(200).json({
         success: true
       });
     } catch (e) {

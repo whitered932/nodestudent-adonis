@@ -16,14 +16,22 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
+// AuthRoutes
 Route.group('auth', () => {
-  // AuthRoutes
+  // Регистрация
   Route.post('/register', 'AuthController.register');
+  // Логин
   Route.post('/login', 'AuthController.login');
+  // Логаут
   Route.post('/logout', 'AuthController.logout');
 }).prefix('api/auth');
 
+// TeacherRoutes
 Route.group('teacher', () => {
-  // TeacherRoutes
+  // Найти по ID
+  Route.post('/find', 'TeacherController.find');
+  // Найти всех
+  Route.post('/all', 'TeacherController.all');
+  // Создать
   Route.post('/create', 'TeacherController.create');
 }).prefix('api/teacher').middleware('auth');
